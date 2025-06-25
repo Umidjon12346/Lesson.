@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Modal,
@@ -10,89 +10,82 @@ import {
   Input,
 } from "reactstrap";
 
-function AddCart({ isOpen, toggle, onSave, initialData = null }) {
-  const isUpdate = initialData !== null;
-
+function AddCart({ isOpen, toggle, product, setProduct, editItem, onSave }) {
   const [form, setForm] = useState({
     name: "",
     price: "",
     sale: "",
     quantity: "",
-    img: "./src/assets/foto.jpg",
+    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Sunflower_from_Silesia2.jpg/1280px-Sunflower_from_Silesia2.jpg",
   });
 
   useEffect(() => {
-    if (isUpdate && initialData) {
-      setForm(initialData);
+    if (editItem) {
+      setForm({
+        id: editItem.id,
+        name: editItem.name || "",
+        price: editItem.price || "",
+        sale: editItem.sale || "",
+        quantity: editItem.quantity || "",
+        img:
+          editItem.img ||
+          "https://upload.wikimedia.org/wikipedia/commons/4/41/Sunflower_from_Silesia2.jpg",
+      });
     } else {
       setForm({
         name: "",
         price: "",
         sale: "",
         quantity: "",
-        img: "./src/assets/foto.jpg",
+        img: "https://upload.wikimedia.org/wikipedia/commons/4/41/Sunflower_from_Silesia2.jpg",
       });
     }
-  }, [initialData, isUpdate]);
+  }, [editItem, isOpen]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    const finalItem = {
-      ...form,
-      id: isUpdate ? form.id : Date.now(),
-      price: +form.price,
-      sale: +form.sale,
-      quantity: +form.quantity,
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    onSave(finalItem);
-    toggle();
-
-    if (!isUpdate) {
-      setForm({
-        name: "",
-        price: "",
-        sale: "",
-        quantity: "",
-        img: "./src/assets/foto.jpg",
-      });
+    if (editItem) {
+      onSave({ ...form });
+    } else {
+      const newItem = {
+        ...form,
+        id: Date.now(),
+      };
+      setProduct([...product, newItem]);
     }
+
+    toggle();
   };
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>
-        {isUpdate ? "Update Product" : "Yangi mahsulot qoshish"}
+        {editItem ? "Mahsulotni tahrirlash" : "Yangi mahsulot qo'shish"}
       </ModalHeader>
       <ModalBody>
         <FormGroup>
           <Label>Nomi</Label>
-          <Input
-            name="name"
-            value={form.name}
-            required
-            onChange={handleChange}
-          />
+          <Input name="name" value={form.name} onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label>Narxi</Label>
           <Input
             name="price"
             type="number"
-            required
             value={form.price}
             onChange={handleChange}
           />
         </FormGroup>
         <FormGroup>
-          <Label>Chegirma (%)</Label>
+          <Label>Chegirma</Label>
           <Input
             name="sale"
             type="number"
-            required
             value={form.sale}
             onChange={handleChange}
           />
@@ -102,19 +95,14 @@ function AddCart({ isOpen, toggle, onSave, initialData = null }) {
           <Input
             name="quantity"
             type="number"
-            required
             value={form.quantity}
             onChange={handleChange}
           />
         </FormGroup>
-        <FormGroup>
-          <Label>Rasm URL</Label>
-          <Input name="img" value={form.img} onChange={handleChange} />
-        </FormGroup>
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={handleSubmit}>
-          {isUpdate ? "Saqlash" : "Qoshish"}
+          {editItem ? "Saqlash" : "Qo‘shish"}
         </Button>
         <Button color="secondary" onClick={toggle}>
           Bekor qilish

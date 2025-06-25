@@ -1,6 +1,6 @@
 import React from "react";
 
-function Cart({ item, onDelete, onUpdate }) {
+function Cart({ item, onDelete, onEdit }) {
   return (
     <div>
       <div className="card" key={item.id}>
@@ -12,10 +12,17 @@ function Cart({ item, onDelete, onUpdate }) {
           <div className="d-flex justify-content-between">
             <p>{item.price}</p>
             <p>{item.quantity}</p>
-            <div className="d-flex align-items-center gap-1">
-              <button onClick={() => onUpdate(item)}>update</button>
-              <button onClick={() => onDelete(item.id)}>delete</button>
-            </div>
+          </div>
+          <div className="d-flex justify-content-between">
+            <button className="btn btn-primary" onClick={() => onEdit(item)}>
+              Update
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => onDelete(item.id)}
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>

@@ -23,7 +23,8 @@ const User = () => {
   };
 
   const moveSingleUser = (id) => {
-    navigate(`/users/${id}`);
+    const basePath = location.pathname.replace(/\/+$/, ""); 
+    navigate(`${basePath}/${id}`);
   };
   return (
     <div className="container">
