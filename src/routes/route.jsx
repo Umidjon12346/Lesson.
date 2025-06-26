@@ -14,7 +14,7 @@ import Index from "../pages/Index";
 import Comments from "../pages/Comment";
 import Products from "../pages/Products";
 import Posts from "../pages/Post";
-import Students from "../pages/logs/Students";
+import Students from "../pages/Students";
 
 function Router() {
   const route = createBrowserRouter(
