@@ -14,6 +14,7 @@ import Index from "../pages/Index";
 import Comments from "../pages/Comment";
 import Products from "../pages/Products";
 import Posts from "../pages/Post";
+import Students from "../pages/logs/Students";
 
 function Router() {
   const route = createBrowserRouter(
@@ -27,6 +28,7 @@ function Router() {
           <Route path="comments" element={<Comments />} />
           <Route path="products" element={<Products />} />
           <Route path="posts" element={<Posts />} />
+          <Route path="students" element={<Students />} />
         </Route>
       </Route>
     )

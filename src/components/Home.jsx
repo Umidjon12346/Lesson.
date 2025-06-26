@@ -17,6 +17,7 @@ function Home() {
         <Link to="posts" className="btn btn-success">
           Posts
         </Link>
+        <Link to="students" className="btn btn-success">Students</Link>
       </div>
     </div>
   );

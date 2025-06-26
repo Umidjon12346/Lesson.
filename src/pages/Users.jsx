@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-const User = () => {
+const Users = () => {
   const [user, setUser] = useState([]);
   const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(true);
@@ -79,4 +79,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Users;
